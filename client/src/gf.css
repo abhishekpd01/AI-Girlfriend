@@ -1,0 +1,23 @@
+.image-container {
+  position: relative;
+  display: inline-block; /* keeps mic aligned with image */
+}
+
+.gf {
+    background: no-repeat center center;
+    background-size: cover;
+    width: 97vw;
+    height: 97vh;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease-in-out;
+    
+}
+
+.mic-container {
+  background: transparent;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
