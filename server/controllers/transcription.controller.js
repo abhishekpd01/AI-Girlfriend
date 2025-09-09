@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { client, openai } from "../config/transcription.config.js";
+import { client } from '../config/tts.config.js';
+import { openai } from '../config/openai.config.js';
 
 async function generateResponse(transcript) {
     const SYSTEM_PROMPT = `
