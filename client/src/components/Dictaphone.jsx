@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { Waveform } from 'ldrs/react'
+import 'ldrs/react/Waveform.css'
 import '../microphone.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
@@ -109,8 +111,14 @@ const Dictaphone = () => {
   return (
     <div style={{ background: "none" }} >
       <MicButton handleStart={handleStart} listening={listening} />
-      
-      {loading && <p><em>Processing...</em></p>}
+      { loading &&
+        <p><Waveform
+          size="35"
+          stroke="3.5"
+          speed="0.8"
+          color="white" 
+        /></p>
+      }
 
       {audioUrl && (
         <audio
@@ -120,6 +128,8 @@ const Dictaphone = () => {
           onEnded={handleAudioEnded}
         />
       )}
+      
+
     </div>
   );
 };
@@ -138,5 +148,3 @@ const MicButton = ({ handleStart, listening }) => {
 };
 
 export default Dictaphone;
-
-
