@@ -2,6 +2,7 @@ import 'dotenv/config'
 import express from 'express';
 import cors from 'cors';
 import transcriptionRouter from './routes/transcription.route.js';
+import clearAudioRouter from './routes/clearAudio.route.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000
@@ -16,5 +17,6 @@ app.get('/', (req, res) => {
 })
 
 app.use('/transcript', transcriptionRouter)
+app.use('/clear-audio', clearAudioRouter)
 
 app.listen(PORT, () => console.log(`Server is up and running 🏃 on port ${PORT}`))

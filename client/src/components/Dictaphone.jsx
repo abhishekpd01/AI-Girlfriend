@@ -85,6 +85,27 @@ const Dictaphone = () => {
     hasTranscript.current = false;
   };
 
+  // Function to delete audio from server
+  const deleteAudioFromServer = async (audioUrl) => {
+    try {
+      // Extract the path after the domain
+      const urlPath = audioUrl.replace('http://localhost:5000', '');
+      await fetch(`http://localhost:5000/clear-audio?path=${encodeURIComponent(urlPath)}`, {
+        method: 'DELETE',
+      });
+    } catch (error) {
+      console.error('Error deleting audio:', error);
+    }
+  };
+
+  // Handler for when audio playback ends
+  const handleAudioEnded = async () => {
+    if (audioUrl) {
+      await deleteAudioFromServer(audioUrl);
+      setAudioUrl(null);
+    }
+  };
+
   return (
     <div style={{ background: "none" }} >
       <MicButton handleStart={handleStart} listening={listening} />
@@ -92,7 +113,12 @@ const Dictaphone = () => {
       {loading && <p><em>Processing...</em></p>}
 
       {audioUrl && (
-        <audio ref={audioRef} src={audioUrl} autoPlay />
+        <audio
+          ref={audioRef}
+          src={audioUrl}
+          autoPlay
+          onEnded={handleAudioEnded}
+        />
       )}
     </div>
   );
@@ -112,3 +138,5 @@ const MicButton = ({ handleStart, listening }) => {
 };
 
 export default Dictaphone;
+
+
