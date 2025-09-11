@@ -8,7 +8,16 @@ const app = express();
 const PORT = process.env.PORT || 5000
 
 app.use(express.json())
-app.use(cors({ origin: true }))
+app.use(cors({
+  origin: [
+    'http://localhost:3000',           // for local development
+    'https://ai-girlfriend-theta.vercel.app/',  // replace with your actual Vercel URL
+    'http://localhost:5173/'   // if you have a custom domain
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use("/audios", express.static("public/audios"));  // Serve audio files from /public/audios
 
