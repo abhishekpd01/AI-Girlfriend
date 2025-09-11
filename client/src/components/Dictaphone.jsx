@@ -5,13 +5,15 @@ import 'ldrs/react/Waveform.css'
 import '../microphone.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
+import { useUser } from "@clerk/clerk-react";
 
-async function sendTranscriptToServer(transcript) {
+async function sendTranscriptToServer(transcript, user) {
   try {
-    const response = await fetch('http://localhost:5000/transcript', {
+    console.log(user?.firstName)
+    const response = await fetch('https://ai-girlfriend-o8zk.onrender.com/transcript', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ transcript })
+      body: JSON.stringify({ transcript, firstName: user?.firstName })
     });
 
     if (!response.ok) {
@@ -34,6 +36,8 @@ const Dictaphone = () => {
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
 
+  const { user } = useUser();
+
   const previousListening = useRef(listening);
   const hasTranscript = useRef(false);
 
@@ -45,17 +49,16 @@ const Dictaphone = () => {
     if (previousListening.current && !listening && transcript.trim()) {
       (async () => {
         setLoading(true);
-        const url = await sendTranscriptToServer(transcript);
+        const url = await sendTranscriptToServer(transcript, user);
         setLoading(false);
         if (url) {
-          setAudioUrl(`http://localhost:5000${url}`);
+          setAudioUrl(`https://ai-girlfriend-o8zk.onrender.com${url}`);
         }
       })();
       hasTranscript.current = true;
     }
     previousListening.current = listening;
-  }, [listening, transcript]);
-
+  }, [listening, transcript, user]);
   useEffect(() => {
     if (audioUrl && audioRef.current) {
       audioRef.current.play().catch(err => {
@@ -91,8 +94,8 @@ const Dictaphone = () => {
   const deleteAudioFromServer = async (audioUrl) => {
     try {
       // Extract the path after the domain
-      const urlPath = audioUrl.replace('http://localhost:5000', '');
-      await fetch(`http://localhost:5000/clear-audio?path=${encodeURIComponent(urlPath)}`, {
+      const urlPath = audioUrl.replace('https://ai-girlfriend-o8zk.onrender.com', '');
+      await fetch(`https://ai-girlfriend-o8zk.onrender.com/clear-audio?path=${encodeURIComponent(urlPath)}`, {
         method: 'DELETE',
       });
     } catch (error) {

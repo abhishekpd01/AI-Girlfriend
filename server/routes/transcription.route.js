@@ -5,10 +5,10 @@ const transcriptionRouter = Router();
 
 transcriptionRouter.post('/', async (req, res) => {
     try {
-        const { transcript } = req.body;
+        const { transcript, firstName } = req.body;
         console.log('Received transcript: ', transcript);
 
-        const audioUrl = await generateResponse(transcript);
+        const audioUrl = await generateResponse(transcript, firstName);
         console.log('Generated audio URL:', audioUrl);
 
         return res.status(200).json({ 

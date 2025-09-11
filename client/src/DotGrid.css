@@ -1,0 +1,119 @@
+.dot-grid {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Full page height */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.dot-grid__wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.dot-grid__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.dot-grid__wrap {
+  position: relative;
+  flex: 1; /* take full space */
+  display: flex;
+  flex-direction: column;
+}
+
+.dot-grid__canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* stays in the background */
+}
+
+.dot-grid__content {
+  position: relative;
+  z-index: 1; /* keep above canvas */
+  flex: 1; /* grow and push footer down */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* navbar top, footer bottom */
+  align-items: center; /* center horizontally */
+  text-align: center;
+  max-width: 100vw;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: transparent;
+  position: relative;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.logo {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.btn-signin {
+  background: transparent;
+  border: 2px solid #27e5f3;
+  color: #27e5f3;
+  padding: 8px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-signin:hover {
+  background: #27e5f3;
+  color: #000;
+}
+
+/* Hero centered between navbar and footer */
+.hero h1 {
+  font-size: 4.2rem;
+}
+
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  background: linear-gradient(270deg, #40ffaa, #4079ff, #40ffaa);
+  background-size: 200% 200%;
+  animation: gradientMove 4s ease-in-out infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 30px;
+  font-weight: 400;
+}
+
+/* Footer pinned bottom */
+.footer {
+  padding: 20px;
+  color: #aaa;
+  font-size: 1rem;
+  font-weight: 400;
+}

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import './App.css'
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import Girlfriend from './components/Girlfriend';
 import GfList from './components/GfList';
 import { useEffect } from "react";
+import DotGrid from "./components/DotGrid";
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -29,11 +30,23 @@ function App() {
   return (
     <header>
       <SignedOut>
-        <SignInButton />
+        <div style={{ width: '100%', height: '100vh', position: 'relative' }}>
+          <DotGrid
+            dotSize={5}
+            gap={20}
+            baseColor="#271E37"
+            activeColor="#5227FF"
+            proximity={120}
+            shockRadius={250}
+            shockStrength={5}
+            resistance={750}
+            returnDuration={1.5}
+          />
+        </div>
       </SignedOut>
       <SignedIn>
-        <div style={{ maxHeight: "100vh", maxWidth: "-webkit-fill-available", display: "grid", justifyContent: "space-evenly" }} >
-          <div style={{ margin: "5px", marginTop: "-10px", padding: "5px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }} >
+        <div className="container">
+          <div className="gf-navbar">
             <UserButton />
             <button
               style={{ marginTop: "16px", padding: "8px 16px", cursor: "pointer" }}
@@ -44,7 +57,7 @@ function App() {
           </div>
           <div>
             {!selectedImage ? (
-              <div style={{ height: "100vh", position: "relative", maxWidth: "100vw", transition: "all 0.3s ease-in-out" }} >
+              <div className="gf-list">
                 <GfList
                   radius={300}
                   damping={0.45}
